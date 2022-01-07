@@ -19,7 +19,9 @@ const localParser = async(url = './watched.csv') => {
         };
 
         // Making each row an object
-        rows.forEach(e => {
+
+        // TODO: Convert this to for loop which supports async or map
+        rows.forEach(async e => {
 
             const dateWatched = e[0];
             const title = e[1];
@@ -34,10 +36,8 @@ const localParser = async(url = './watched.csv') => {
             dataObject.isWatchedAlone = isWatchedAlone;
 
             watchedData.push(dataObject);
-            
         });
 
-        return watchedData
 
 
     } catch (err) {
@@ -48,15 +48,13 @@ const localParser = async(url = './watched.csv') => {
 
 async function tmdbSearch(e) {
 
-
     let url = `https://api.themoviedb.org/3/search/movie?api_key=00decbdccac0d50538a8bdbf8085ce4a&language=en-US&query=${e}&page=1&include_adult=false`;
 
     try {
         const response = await fetch(url);
         const data = await response.json();
 
-        console.log(data.results[0].release_date);
-    
+        return data.results[0]
 
     } catch (err) {
         console.error(`this is my error!: ${err}`);
@@ -69,15 +67,10 @@ async function getAllData(){
     try {
 
         localData = await localParser();
-    
-        localData.forEach(e => {
-            tmdbSearch(e.title)
-        });  
               
     } catch (err) {
         console.error(`this is my error!: ${err}`);
     }
 }
 
-
-getAllData()
+console.log(localParser());
