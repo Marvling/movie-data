@@ -1,11 +1,7 @@
 
-const searchResult = []
-
-async function dataParser() {
+const localParser = async(url = './watched.csv') => {
 
     const watchedData = []
-
-    let url = './watched.csv';
 
     try {
         const response = await fetch(url);
@@ -16,6 +12,7 @@ async function dataParser() {
 
         // Remmoving a special character after each line (Cleaning)
         const rows = [];
+
         for (let i = 0; i < table.length; i++) {
             const row = table[i].split('\r').join('');
             rows.push(row.split(','));
@@ -37,17 +34,18 @@ async function dataParser() {
             dataObject.isWatchedAlone = isWatchedAlone;
 
             watchedData.push(dataObject);
+            
         });
 
-        
+        return watchedData
+
 
     } catch (err) {
         console.error(`this is my error!: ${err}`);
     }
 
-    return watchedData
 }
-   
+
 async function tmdbSearch(e) {
 
 
@@ -57,7 +55,7 @@ async function tmdbSearch(e) {
         const response = await fetch(url);
         const data = await response.json();
 
-        searchResult.push = data.results[0];
+        console.log(data.results[0].release_date);
     
 
     } catch (err) {
@@ -66,17 +64,20 @@ async function tmdbSearch(e) {
     
 }
 
+async function getAllData(){
+
+    try {
+
+        localData = await localParser();
+    
+        localData.forEach(e => {
+            tmdbSearch(e.title)
+        });  
+              
+    } catch (err) {
+        console.error(`this is my error!: ${err}`);
+    }
+}
 
 
-// const bok = watchedData[0]
-
-console.log(dataParser());
-
-// watchedData.forEach(e => {
-//     tmdbSearch('Die Hard');
-
-// });
-
-
-
-
+getAllData()
