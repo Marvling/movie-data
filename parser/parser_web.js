@@ -1,5 +1,9 @@
 
+const searchResult = []
+
 async function dataParser() {
+
+    const watchedData = []
 
     let url = './watched.csv';
 
@@ -18,8 +22,8 @@ async function dataParser() {
         };
 
         // Making each row an object
-        const objects = [];
         rows.forEach(e => {
+
             const dateWatched = e[0];
             const title = e[1];
             const isWatchedInTheater = e[2];
@@ -32,41 +36,47 @@ async function dataParser() {
             dataObject.isWatchedInTheater = isWatchedInTheater;
             dataObject.isWatchedAlone = isWatchedAlone;
 
-            objects.push(dataObject);
+            watchedData.push(dataObject);
         });
 
-        console.log(objects);
+        
 
     } catch (err) {
         console.error(`this is my error!: ${err}`);
     }
+
+    return watchedData
 }
    
-const tmdbSearch = async (e) => {
+async function tmdbSearch(e) {
+
 
     let url = `https://api.themoviedb.org/3/search/movie?api_key=00decbdccac0d50538a8bdbf8085ce4a&language=en-US&query=${e}&page=1&include_adult=false`;
 
-    try{
-        const response = await fetch(url)
-        const data = await response.json()
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
 
-        const firstlResult = data.results[0]
+        searchResult.push = data.results[0];
+    
 
-        listData.push(firstlResult)
-        
-    }catch(err){
-        console.error(`this is my error!: ${err}`)
+    } catch (err) {
+        console.error(`this is my error!: ${err}`);
     }
-
-    console.log(listData)
+    
 }
 
-function getJson (movieNames) {
 
-    for (let i = 0; i < movieNames.length; i++) {
-        const e = listNames[i];
-        tmdbSearch(e);
-    }
-}
 
-dataParser();
+// const bok = watchedData[0]
+
+console.log(dataParser());
+
+// watchedData.forEach(e => {
+//     tmdbSearch('Die Hard');
+
+// });
+
+
+
+
