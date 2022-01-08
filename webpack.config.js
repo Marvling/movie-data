@@ -27,6 +27,15 @@ module.exports = {
     topLevelAwait: true,
   },
 
+  externals: [
+    'mongodb-client-encryption',
+    'aws4',
+    'saslprep',
+    'kerberos',
+    'snappy',
+    'bson-ext',
+],
+
   // Environment mode
   mode: 'development',
 
@@ -34,7 +43,6 @@ module.exports = {
   entry: resolveAppPath('src'),
 
   output: {
-
     // Development filename output
     filename: 'static/js/bundle.js',
   },
@@ -54,8 +62,6 @@ module.exports = {
     host,
     port: 8001,
 
-    // writeToDisk: true,
-
     // devMiddleware: {
     //   index: true,
     //   mimeTypes: { phtml: 'text/html' },
@@ -64,12 +70,9 @@ module.exports = {
     //   writeToDisk: true,
     // },
 
-
     // Public path is root of content base
     // THROWS ERROR, WON'T SERVE
     // publicPath: '/',
-
-    
 
     proxy: {
       '/api/bypass-example': {
