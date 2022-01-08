@@ -102,27 +102,3 @@ async function getAllData() {
 
   return tmdbArray;
 }
-
-async function jsonWriter(url = jsonPath) {
-
-  const response = await fetch(url);
-  const data = await response.json();
-
-
-}
-
-let bokum = require('../parser/movieData.json')
-
-function modify(buffer) {
-   // copy-webpack-plugin passes a buffer
-   var manifest = JSON.parse(buffer.toString());
-
-   // make any modifications you like, such as
-   manifest.version = bokum.version;
-
-   // pretty print to JSON with two spaces
-   manifest_JSON = JSON.stringify(manifest, null, 2);
-   return manifest_JSON;
-}
-
-console.log(modify(await getAllData()));
