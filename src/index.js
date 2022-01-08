@@ -102,6 +102,3 @@ async function getAllData() {
 
   return tmdbArray;
 }
-
-
-console.log(await getAllData());
