@@ -1,4 +1,5 @@
 
+
 const localParser = async(url = './watched.csv') => {
 
     const watchedData = []
@@ -18,6 +19,8 @@ const localParser = async(url = './watched.csv') => {
             rows.push(row.split(','));
         };
 
+        // console.log(rows)
+
         // Making each row an object
 
         // TODO: Convert this to for loop which supports async or map
@@ -28,7 +31,7 @@ const localParser = async(url = './watched.csv') => {
             const isWatchedInTheater = e[2];
             const isWatchedAlone = e[3];
 
-            dataObject = { dateWatched: '', title: '', isWatchedInTheater: '', isWatchedAlone: '' };
+            let dataObject = {};
 
             dataObject.dateWatched = dateWatched;
             dataObject.title = title;
@@ -36,6 +39,7 @@ const localParser = async(url = './watched.csv') => {
             dataObject.isWatchedAlone = isWatchedAlone;
 
             watchedData.push(dataObject);
+            console.log(dataObject);
         });
 
 
@@ -73,4 +77,4 @@ async function getAllData(){
     }
 }
 
-console.log(localParser());
+localParser();

@@ -17,6 +17,15 @@ const host = process.env.HOST || 'localhost';
 process.env.NODE_ENV = 'development';
 
 module.exports = {
+  experiments: {
+    // asyncWebAssembly: true,
+    // buildHttp: true,
+    // layers: true,
+    // lazyCompilation: true,
+    // outputModule: true,
+    // syncWebAssembly: true,
+    topLevelAwait: true,
+  },
 
   // Environment mode
   mode: 'development',
@@ -43,12 +52,24 @@ module.exports = {
     hot: true,
 
     host,
+    port: 8001,
 
-    port: 8000,
+    // writeToDisk: true,
+
+    // devMiddleware: {
+    //   index: true,
+    //   mimeTypes: { phtml: 'text/html' },
+    //   publicPath: '/publicPathForDevServe',
+    //   serverSideRender: true,
+    //   writeToDisk: true,
+    // },
+
 
     // Public path is root of content base
     // THROWS ERROR, WON'T SERVE
     // publicPath: '/',
+
+    
 
     proxy: {
       '/api/bypass-example': {
@@ -57,9 +78,8 @@ module.exports = {
         }),
       },
     },
-
   },
-
+  
   module: {
     rules: [
       {
@@ -69,11 +89,23 @@ module.exports = {
         loader: 'babel-loader',
         options: {
           presets: [
-
             // Preset includes JSX, TypeScript, and some ESnext features
             require.resolve('babel-preset-react-app'),
           ]
         }
+
+      },
+      {
+        test:  /\.(csv|txt)$/,
+        use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: "[path][name].[ext]",
+                emitFile: true,
+              }
+            },
+          ],
       }
     ],
   },
