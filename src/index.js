@@ -143,4 +143,3 @@ writing the data to a static file requires a db implementation */
 // Finding search errors on the movie-data.json
 const searchErrors = (jsonPath.filter(obj => obj.release_date == null && obj.title != ''));
 console.log(searchErrors);
-=
