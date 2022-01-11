@@ -9,6 +9,7 @@ it is mounted as index so it can be run from the browser*/
 /* Paths need to be imported using module for exposing local files in the node server
 the npm package is called file-loader and is loaded in webpack config*/
 import csvPath from '../data/watched.csv'
+import jsonPath from '../data/movie-data.json'
 
 // Parsing the local csv data
 async function localParser(url = csvPath) {
@@ -82,6 +83,24 @@ async function tmdbSearch(e) {
 
 }
 
+// Unused function, returns more data then search by string
+// TODO: Get more by searching by ID
+async function tmdbSearchId (id){
+  let url = `https://api.themoviedb.org/3/movie/${id}?api_key=00decbdccac0d50538a8bdbf8085ce4a`;
+
+  try {
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    // the api returns an array of results, this function returns the first element in that array
+    return data
+
+  } catch (err) {
+    console.error(`this is my error!: ${err}`);
+  }
+ }
+
 // Returns an array that has objects containing both local data, and tmdb data
 async function getCombinedData() {
 
@@ -93,11 +112,10 @@ async function getCombinedData() {
     const localData = await localParser();
     
     // Iterating through local data
-    //TODO: convert to forEach loop
     for (let index = 0; index < localData.length; index++) {
       const element = localData[index];
 
-      /* If the local data name is emptey (no movies wathed that day)
+      /* If the local data name is empty (no movies wathed that day)
       no requests will be made and the local data will be pused*/
       if (element.title == '') {
         combinedArray.push(element);
@@ -119,8 +137,12 @@ async function getCombinedData() {
   return combinedArray;
 }
 
-// log all the data to the console 
-console.log(await getCombinedData())
-
 /* the data can be copied as an object and pasted into a static file
 writing the data to a static file requires a db implementation */
+
+// log all the data to the console
+// console.log(await getCombinedData())
+
+// Finding search errors on the movie-data.json
+const searchErrors = (jsonPath.filter(obj => obj.release_date == null && obj.title != ''));
+console.log(searchErrors);
