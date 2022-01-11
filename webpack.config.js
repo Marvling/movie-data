@@ -17,24 +17,24 @@ const host = process.env.HOST || 'localhost';
 process.env.NODE_ENV = 'development';
 
 module.exports = {
-  experiments: {
-    // asyncWebAssembly: true,
-    // buildHttp: true,
-    // layers: true,
-    // lazyCompilation: true,
-    // outputModule: true,
-    // syncWebAssembly: true,
-    topLevelAwait: true,
-  },
+  // experiments: {
+  //   // asyncWebAssembly: true,
+  //   // buildHttp: true,
+  //   // layers: true,
+  //   // lazyCompilation: true,
+  //   // outputModule: true,
+  //   // syncWebAssembly: true,
+  //   // topLevelAwait: true,
+  // },
 
-  externals: [
-    'mongodb-client-encryption',
-    'aws4',
-    'saslprep',
-    'kerberos',
-    'snappy',
-    'bson-ext',
-],
+//   externals: [
+//     'mongodb-client-encryption',
+//     'aws4',
+//     'saslprep',
+//     'kerberos',
+//     'snappy',
+//     'bson-ext',
+// ],
 
   // Environment mode
   mode: 'development',
